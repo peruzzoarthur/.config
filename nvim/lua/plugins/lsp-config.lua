@@ -9,7 +9,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "eslint", "html", "ts_ls", "prismals", "dockerls", "jsonls", "denols" },
+        ensure_installed = { "lua_ls", "eslint", "html", "ts_ls", "prismals", "dockerls", "jsonls", "denols", "yamlls", "volar" },
       })
     end,
   },
@@ -43,23 +43,32 @@ return {
       lspconfig.ts_ls.setup({
         capabilities = capabilities,
       })
-
+      lspconfig.yamlls.setup({
+        capabilities = capabilities,
+      })
       -- Add Prisma Language Server setup
       lspconfig.prismals.setup({
         capabilities = capabilities,
       })
 
-      local nvim_lsp = require("lspconfig")
-      nvim_lsp.denols.setup({
+      lspconfig.denols.setup({
         on_attach = on_attach,
-        root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
       })
 
-      nvim_lsp.ts_ls.setup({
+      lspconfig.ts_ls.setup({
         on_attach = on_attach,
-        root_dir = nvim_lsp.util.root_pattern("package.json"),
+        root_dir = lspconfig.util.root_pattern("package.json"),
         single_file_support = false,
       })
+
+      lspconfig.volar.setup {
+        init_options = {
+          vue = {
+            hybridMode = false,
+          },
+        },
+      }
 
       -- Keymaps for LSP functionality
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
