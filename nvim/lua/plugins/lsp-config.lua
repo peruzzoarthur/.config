@@ -9,7 +9,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "eslint", "html", "ts_ls", "prismals", "dockerls", "jsonls", "denols", "yamlls", "volar" },
+        ensure_installed = { "lua_ls", "eslint", "html", "ts_ls", "prismals", "dockerls", "jsonls", "denols", "yamlls", "volar", "gopls" },
       })
     end,
   },
@@ -69,6 +69,7 @@ return {
           },
         },
       }
+      lspconfig.gopls.setup({})
 
       -- Keymaps for LSP functionality
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
