@@ -42,3 +42,7 @@ vim.keymap.set("n", "<S-d>", vim.diagnostic.open_float, { noremap = true, silent
 
 vim.opt.conceallevel = 2
 
+vim.keymap.set("n", "<C-M-l>", ":vertical resize -2<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-M-h>", ":vertical resize +2<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-M-k>", ":resize +2<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-M-j>", ":resize -2<CR>", { noremap = true, silent = true })
