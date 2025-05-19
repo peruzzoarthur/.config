@@ -41,6 +41,7 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 vim.keymap.set("n", "<S-d>", vim.diagnostic.open_float, { noremap = true, silent = true })
 
 vim.opt.conceallevel = 2
+vim.opt.laststatus = 3
 
 vim.keymap.set("n", "<C-M-l>", ":vertical resize -2<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-M-h>", ":vertical resize +2<CR>", { noremap = true, silent = true })

@@ -14,10 +14,11 @@ return {
           "eslint",
           "html",
           "ts_ls",
+          -- "tsserver",
           "prismals",
           "dockerls",
           "jsonls",
-          "denols",
+          -- "denols",
           "yamlls",
           "volar",
           "gopls",
@@ -33,6 +34,11 @@ return {
 
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
           or vim.lsp.protocol.make_client_capabilities()
+
+      local on_attach = function(client, bufnr)
+        -- Enable completion triggered by <c-x><c-o>
+        vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+      end
 
       -- For Tailwind setup
       lspconfig.tailwindcss.setup({
@@ -70,40 +76,62 @@ return {
       lspconfig.lua_ls.setup({
         capabilities = capabilities,
       })
+
       lspconfig.ts_ls.setup({
         capabilities = capabilities,
-        root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json"),
+        on_attach = on_attach,
+        root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
         single_file_support = false,
+        init_options = {
+          preferences = {
+            importModuleSpecifier = "non-relative",
+            includeInlayParameterNameHints = "all",
+            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayVariableTypeHints = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayEnumMemberValueHints = true,
+          },
+        },
         settings = {
           typescript = {
+            inlayHints = {
+              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
             preferences = {
-              importModuleSpecifier = "non-relative", -- or "project-relative"
+              importModuleSpecifier = "non-relative",
             },
           },
           javascript = {
+            inlayHints = {
+              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
             preferences = {
               importModuleSpecifier = "non-relative",
             },
           },
         },
       })
+
       lspconfig.yamlls.setup({
         capabilities = capabilities,
       })
-      -- Add Prisma Language Server setup
+
       lspconfig.prismals.setup({
         capabilities = capabilities,
-      })
-
-      lspconfig.denols.setup({
-        on_attach = on_attach,
-        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-      })
-
-      lspconfig.ts_ls.setup({
-        on_attach = on_attach,
-        root_dir = lspconfig.util.root_pattern("package.json"),
-        single_file_support = false,
       })
 
       lspconfig.volar.setup({

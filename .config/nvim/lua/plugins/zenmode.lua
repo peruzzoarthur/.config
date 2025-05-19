@@ -29,6 +29,12 @@ return {
       },
     })
 
+    vim.api.nvim_create_autocmd("VimEnter", {
+      callback = function()
+        vim.cmd("ZenMode")
+      end,
+    })
+
     vim.keymap.set("n", "<leader>z", "<cmd>ZenMode<CR>", { desc = "Toggle Zen Mode" })
   end,
 }
