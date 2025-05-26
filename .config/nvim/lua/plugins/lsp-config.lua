@@ -20,7 +20,7 @@ return {
           "jsonls",
           -- "denols",
           "yamlls",
-          "volar",
+          -- "volar",
           "gopls",
           "tailwindcss",
         },
@@ -134,13 +134,13 @@ return {
         capabilities = capabilities,
       })
 
-      lspconfig.volar.setup({
-        init_options = {
-          vue = {
-            hybridMode = false,
-          },
-        },
-      })
+      -- lspconfig.volar.setup({
+      --   init_options = {
+      --     vue = {
+      --       hybridMode = false,
+      --     },
+      --   },
+      -- })
       lspconfig.gopls.setup({})
 
       -- Keymaps for LSP functionality
@@ -150,6 +150,12 @@ return {
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
       vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
       vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, {})
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>oi",
+        '<cmd>lua vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })<CR>',
+        { noremap = true, silent = true }
+      )
     end,
   },
 }
