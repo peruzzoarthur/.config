@@ -13,7 +13,8 @@ return {
           "lua_ls",
           "eslint",
           "html",
-          "ts_ls",
+          -- "ts_ls",
+          "vtsls",
           -- "tsserver",
           "prismals",
           "dockerls",
@@ -77,14 +78,18 @@ return {
         capabilities = capabilities,
       })
 
-      lspconfig.ts_ls.setup({
+      lspconfig.vtsls.setup({
         capabilities = capabilities,
         on_attach = on_attach,
         root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
         single_file_support = false,
         init_options = {
+          hostInfo = "neovim",
           preferences = {
-            importModuleSpecifier = "non-relative",
+            includeCompletionsForModuleExports = true,
+            includeCompletionsForImportStatements = true,
+            importModuleSpecifierPreference = "relative",
+            importModuleSpecifier = "relative",
             includeInlayParameterNameHints = "all",
             includeInlayParameterNameHintsWhenArgumentMatchesName = false,
             includeInlayFunctionParameterTypeHints = true,
@@ -107,6 +112,9 @@ return {
             },
             preferences = {
               importModuleSpecifier = "non-relative",
+              includeCompletionsForModuleExports = true,
+              includeCompletionsForImportStatements = true,
+              importModuleSpecifierPreference = "non-relative",
             },
           },
           javascript = {
@@ -125,6 +133,62 @@ return {
           },
         },
       })
+
+      -- lspconfig.ts_ls.setup({
+      --   capabilities = capabilities,
+      --   on_attach = on_attach,
+      --   root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
+      --   single_file_support = false,
+      --   init_options = {
+      --     hostInfo = "neovim",
+      --     preferences = {
+      --       includeCompletionsForModuleExports = true,
+      --       includeCompletionsForImportStatements = true,
+      --       importModuleSpecifierPreference = "relative",
+      --       importModuleSpecifier = "relative",
+      --       includeInlayParameterNameHints = "all",
+      --       includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+      --       includeInlayFunctionParameterTypeHints = true,
+      --       includeInlayVariableTypeHints = true,
+      --       includeInlayPropertyDeclarationTypeHints = true,
+      --       includeInlayFunctionLikeReturnTypeHints = true,
+      --       includeInlayEnumMemberValueHints = true,
+      --     },
+      --   },
+      --   settings = {
+      --     typescript = {
+      --       inlayHints = {
+      --         includeInlayParameterNameHints = "all",
+      --         includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+      --         includeInlayFunctionParameterTypeHints = true,
+      --         includeInlayVariableTypeHints = true,
+      --         includeInlayPropertyDeclarationTypeHints = true,
+      --         includeInlayFunctionLikeReturnTypeHints = true,
+      --         includeInlayEnumMemberValueHints = true,
+      --       },
+      --       preferences = {
+      --         importModuleSpecifier = "non-relative",
+      --         includeCompletionsForModuleExports = true,
+      --         includeCompletionsForImportStatements = true,
+      --         importModuleSpecifierPreference = "non-relative",
+      --       },
+      --     },
+      --     javascript = {
+      --       inlayHints = {
+      --         includeInlayParameterNameHints = "all",
+      --         includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+      --         includeInlayFunctionParameterTypeHints = true,
+      --         includeInlayVariableTypeHints = true,
+      --         includeInlayPropertyDeclarationTypeHints = true,
+      --         includeInlayFunctionLikeReturnTypeHints = true,
+      --         includeInlayEnumMemberValueHints = true,
+      --       },
+      --       preferences = {
+      --         importModuleSpecifier = "non-relative",
+      --       },
+      --     },
+      --   },
+      -- })
 
       lspconfig.yamlls.setup({
         capabilities = capabilities,
