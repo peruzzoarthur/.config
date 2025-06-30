@@ -44,24 +44,20 @@ zinit cdreplay -q
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+if [ -f /usr/bin/fastfetch ]; then
+	fastfetch
+fi
+
+
 # Keybindings
 bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 
-# History
-HISTSIZE=5000
-HISTFILE=~/.zsh_history
-SAVEHIST=$HISTSIZE
-HISTDUP=erase
-setopt appendhistory
-setopt sharehistory
-setopt hist_ignore_space
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-setopt hist_ignore_dups
-setopt hist_find_no_dups
+# cli colors
+export CLICOLOR=1
+export LS_COLORS='di=1;36:ln=1;35:ex=1;32:so=1;31:pi=1;33:bd=1;34:cd=1;33:su=0;41:sg=0;46:tw=0;42:ow=0;43'
 
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -72,13 +68,17 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
 alias ls='ls --color'
+alias ll="ls -alG"
 alias t='tmux'
 alias tn='cd ~/Notes/ColdNotes && tmux new -s ColdNotes'
 alias v='nvim'
 alias c='clear'
 alias cl='clear && viu "$(~/scripts/random_image.sh ~/arthur/cats-imgs/images)" -h 10 -t'
-# alias c='clear && pokemon-colorscripts -rn bulbasaur,ivysaur,venusaur,charmander,charmeleon,charizard,squirtle,wartortle,blastoise,caterpie,metapod,butterfree,weedle,kakuna,beedrill,pidgey,pidgeotto,pidgeot,rattata,raticate,spearow,fearow,ekans,arbok,pikachu,raichu,sandshrew,sandslash,nidoran-f,nidorina,nidoqueen,nidoran-m,nidorino,nidoking,clefairy,clefable,vulpix,ninetales,jigglypuff,wigglytuff,zubat,golbat,oddish,gloom,vileplume,paras,parasect,venonat,venomoth,diglett,dugtrio,meowth,persian,psyduck,golduck,mankey,primeape,growlithe,arcanine,poliwag,poliwhirl,poliwrath,abra,kadabra,alakazam,machop,machoke,machamp,bellsprout,weepinbell,victreebel,tentacool,tentacruel,geodude,graveler,golem,ponyta,rapidash,slowpoke,slowbro,magnemite,magneton,farfetchd,doduo,dodrio,seel,dewgong,grimer,muk,shellder,cloyster,gastly,haunter,gengar,onix,drowzee,hypno,krabby,kingler,voltorb,electrode,exeggcute,exeggutor,cubone,marowak,hitmonlee,hitmonchan,lickitung,koffing,weezing,rhyhorn,rhydon,chansey,tangela,kangaskhan,horsea,seadra,goldeen,seaking,staryu,starmie,mr-mime,scyther,jynx,electabuzz,magmar,pinsir,tauros,magikarp,gyarados,lapras,ditto,eevee,vaporeon,jolteon,flareon,porygon,omanyte,omastar,kabuto,kabutops,aerodactyl,snorlax,articuno,zapdos,moltres,dratini,dragonair,dragonite,mewtwo,mew --no-title'
 alias day='$SCRIPTS/create-obsidian-daily-note.sh'
+alias yayf="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S"
+alias history='fc -li 1'  # All history with timestamps
+alias h='fc -li -500'   # Last 500 commands with timestamps
+
 # Shell integrations
 # Initialize zoxide correctly without conflicting with zinit
 eval "$(zoxide init zsh | sed 's/zi()/zoxide_zi()/')"
@@ -148,8 +148,6 @@ ccm() {
   git diff | cody chat --stdin -m 'Write a commit message for this diff'
 }
 
-fastfetch
-
 alias ll='ls -l'
 
 # Setup bindings for both smkx and rmkx key variants
@@ -209,6 +207,20 @@ export BROWSER=firefox
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
-za() {
-  nohup zathura "$1" & disown & clear
-}
+export GI_TYPELIB_PATH=/usr/local/lib/girepository-1.0:$GI_TYPELIB_PATH
+
+# History configuration
+export HISTSIZE=5000
+export SAVEHIST=5000
+export HISTFILE=~/.zsh_history
+
+# Zsh history options
+setopt APPEND_HISTORY          # Append to history file
+setopt SHARE_HISTORY           # Share history between sessions
+setopt HIST_IGNORE_SPACE       # Don't record commands starting with space
+setopt HIST_IGNORE_ALL_DUPS    # Remove older duplicate entries
+setopt HIST_SAVE_NO_DUPS       # Don't save duplicates to file
+setopt HIST_FIND_NO_DUPS       # Don't show duplicates when searching
+setopt EXTENDED_HISTORY        # Save timestamps
+
+
