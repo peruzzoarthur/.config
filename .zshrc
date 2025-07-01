@@ -223,4 +223,12 @@ setopt HIST_SAVE_NO_DUPS       # Don't save duplicates to file
 setopt HIST_FIND_NO_DUPS       # Don't show duplicates when searching
 setopt EXTENDED_HISTORY        # Save timestamps
 
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
 
+export EDITOR=nvim
