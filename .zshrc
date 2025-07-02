@@ -73,7 +73,8 @@ alias t='tmux'
 alias tn='cd ~/Notes/ColdNotes && tmux new -s ColdNotes'
 alias v='nvim'
 alias c='clear'
-alias cl='clear && viu "$(~/scripts/random_image.sh ~/arthur/cats-imgs/images)" -h 10 -t'
+# alias cl='clear && viu "$(~/scripts/random_image.sh ~/arthur/cats-imgs/images)" -h 10 -t'
+alias cl='clear && kitty +kitten icat "$(~/scripts/random_image.sh ~/arthur/cats-imgs/images)" '
 alias day='$SCRIPTS/create-obsidian-daily-note.sh'
 alias yayf="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S"
 alias history='fc -li 1'  # All history with timestamps
