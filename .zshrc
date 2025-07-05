@@ -67,18 +67,27 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
-alias ls='ls --color'
-alias ll="ls -alG"
+alias ls='eza -lh --group-directories-first --icons=auto'
+alias lsa='ls -a'
+alias lt='eza --tree --level=2 --long --icons --git'
+alias lta='lt -a'
+alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
 alias t='tmux'
 alias tn='cd ~/Notes/ColdNotes && tmux new -s ColdNotes'
 alias v='nvim'
 alias c='clear'
 # alias cl='clear && viu "$(~/scripts/random_image.sh ~/arthur/cats-imgs/images)" -h 10 -t'
-alias cl='clear && kitty +kitten icat "$(~/scripts/random_image.sh ~/arthur/cats-imgs/images)" '
+# alias cl='clear && kitty +kitten icat "$(~/scripts/random_image.sh ~/arthur/cats-imgs/images)" '
+alias cl='clear && magick "$(~/scripts/random_image.sh ~/arthur/cats-imgs/images)" -resize 250x250 png:- | kitty +kitten icat --stdin yes'
 alias day='$SCRIPTS/create-obsidian-daily-note.sh'
 alias yayf="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S"
 alias history='fc -li 1'  # All history with timestamps
 alias h='fc -li -500'   # Last 500 commands with timestamps
+
+# Directories
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 
 # Shell integrations
 # Initialize zoxide correctly without conflicting with zinit

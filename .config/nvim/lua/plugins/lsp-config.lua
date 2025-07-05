@@ -198,6 +198,14 @@ return {
         capabilities = capabilities,
       })
 
+      lspconfig.denols.setup({
+        -- Disable denols by making it only work in very specific conditions
+        root_dir = function(fname)
+          -- Only enable denols if there's a deno.json/deno.jsonc file
+          return lspconfig.util.root_pattern("deno.json", "deno.jsonc")(fname)
+        end,
+        single_file_support = false,
+      })
       -- lspconfig.volar.setup({
       --   init_options = {
       --     vue = {
